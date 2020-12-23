@@ -44,10 +44,19 @@ client.on('message', msg => {
 
   else if (command === 'mute' && msg.member.hasPermission("MANAGE_ROLES", "ADMINISTRATOR")) {
       msg.channel.send(`${msg.member.voice.channel.name} está mutado.`);
-      msg.member.voice.channel.members.forEach(member => member.voice.setMute(true));
+      msg.member.voice.channel.members.forEach((member, index) =>  setTimeout(()=>{member.voice.setMute(true)},100*index));
   } else if (command === 'unmute' && msg.member.hasPermission("MANAGE_ROLES", "ADMINISTRATOR")) {
       msg.channel.send(`${msg.member.voice.channel.name} está desmutado.`);
-      msg.member.voice.channel.members.forEach(member => member.voice.setMute(false));
+      msg.member.voice.channel.members.forEach((member, index) =>  setTimeout(()=>{member.voice.setMute(false)},100*index));
+  }
+
+  else if (command.startsWith('d')) {
+    let dice = parseInt(command.substring(1)-1);
+    if(!(dice===Number(dice))) {
+      msg.channel.send("Por favor né, isso daí não é número, é por tipos assim que meu trabalho preventido fica difícil!");
+    } else {
+      msg.channel.send((Math.round(Math.random()*dice+1)));
+    }
   }
 
 });
